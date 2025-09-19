@@ -8,8 +8,6 @@
 
 Built with **Next.js**, **FastAPI**, **OpenAI**, **Resend**, and **Twilio**.
 
----
-
 ## Features
 
 - 📄 Resume-based Q&A (reads from `resume/resume.pdf`)
@@ -17,8 +15,6 @@ Built with **Next.js**, **FastAPI**, **OpenAI**, **Resend**, and **Twilio**.
 - 📬 Lead capture form with notifications
 - 📲 Notifications via Email (Resend), SMS & WhatsApp (Twilio)
 - 🌐 Web UI built with Next.js + TailwindCSS
-
----
 
 ## Tech Stack
 
@@ -28,14 +24,12 @@ Built with **Next.js**, **FastAPI**, **OpenAI**, **Resend**, and **Twilio**.
 - **Email:** Resend
 - **SMS/WhatsApp:** Twilio
 
----
-
 ## Quickstart
 
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourname/resume-chat.git
+git clone https://github.com/joekariuki/resume-chat.git
 cd resume-chat
 ```
 
@@ -57,15 +51,11 @@ npm install
 npm run dev
 ```
 
----
-
 ## Deployment
 
 - **Frontend:** Deploy `web/` to Vercel.
 - **Backend:** Deploy `api/` to Railway or Render (Dockerfile included).
 - Set `NEXT_PUBLIC_API_URL` in the web app to point to your backend URL.
-
----
 
 ## Environment Variables
 
@@ -91,14 +81,10 @@ NOTIFY_TO_WHATSAPP=+1YYYYYYYYYY
 NEXT_PUBLIC_API_URL=https://your-api.onrender.com
 ```
 
----
-
 ## Demo
 
 🔗 Live demo: [link here]  
 📂 Repo: [GitHub link]
-
----
 
 ## License
 
