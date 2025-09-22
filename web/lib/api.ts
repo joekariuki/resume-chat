@@ -1,3 +1,13 @@
+/**
+ * API utilities for making JSON POST requests with timeout and robust error handling.
+ *
+ * Environment:
+ * - NEXT_PUBLIC_API_URL: Base URL for the API. Trailing slash is trimmed automatically.
+ *
+ * Exports:
+ * - postJSON<TResponse>(path, body, options): Promise<TResponse>
+ */
+
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
 type FetchOptions = {
@@ -5,6 +15,19 @@ type FetchOptions = {
 	headers?: Record<string, string>;
 };
 
+/**
+ * Sends a POST request with a JSON body and robust timeout/error handling.
+ *
+ * @template TResponse The expected response type after parsing.
+ * @param {string} path - Path to append to the API base URL (e.g., "/chat").
+ * @param {unknown} body - Serializable payload to send as JSON.
+ * @param {{ timeoutMs?: number; headers?: Record<string, string> }} [options] -
+ *   Optional settings for request timeout and additional headers.
+ * @param {number} [options.timeoutMs=20000] - Timeout in milliseconds before aborting the request.
+ * @param {Record<string, string>} [options.headers] - Additional headers to merge with defaults.
+ * @returns {Promise<TResponse>} Resolves with the parsed JSON (or text) response.
+ * @throws {Error} If the base API URL is not set, the request times out, or the response is non-OK.
+ */
 async function postJSON<TResponse>(
 	path: string,
 	body: unknown,
