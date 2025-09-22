@@ -38,3 +38,15 @@ export type ChatResponse = {
 	reply: string;
 	handled: boolean;
 };
+
+export type ContactRequest = {
+	name: string;
+	email: string;
+	message: string;
+	phone?: string;
+};
+
+export type ContactResponse = {
+	success: boolean;
+	// Other fields for API returns go here
+};
