@@ -10,8 +10,8 @@ wheels/
 .venv
 
 
-# Resume
-resume/resume.pdf
-
 # Environment variables
 .env
+
+# macOS
+.DS_Store
