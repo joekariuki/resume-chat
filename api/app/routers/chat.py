@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from ..core.config import settings
-from ..retrieval import retrieve_top_chunks
+from ..services import retrieve_top_chunks
 
 router = APIRouter()
 

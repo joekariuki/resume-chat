@@ -4,7 +4,7 @@ from time import perf_counter
 
 from ..core.config import settings
 from ..pdf_loader import get_resume_info, get_resume_text
-from ..retrieval import retrieve_top_chunks
+from ..services import retrieve_top_chunks
 
 router = APIRouter(tags=["debug"])
 
@@ -49,7 +49,7 @@ def debug_retrieve(
     if not q:
         raise HTTPException(status_code=422, detail="Query must be non-empty.")
 
-    top_k = k or settings.retrieval.top_k
+    top_k = k or settings.retrieve.top_k
     threshold = settings.similarity_threshold
 
     # Measure end-to-end retrieval latency
@@ -69,12 +69,12 @@ def debug_retrieve(
             handled=False,
             elapsed_ms=elapsed_ms,
             config={
-                "chunk_size": settings.retrieval.chunk_size,
-                "chunk_overlap": settings.retrieval.chunk_overlap,
-                "boundary_window": settings.retrieval.boundary_window,
-                "ngram_range": [settings.retrieval.tfidf_ngram_min, settings.retrieval.tfidf_ngram_max],
-                "min_df": settings.retrieval.tfidf_min_df,
-                "max_df": settings.retrieval.tfidf_max_df,
+                "chunk_size": settings.retrieve.chunk_size,
+                "chunk_overlap": settings.retrieve.chunk_overlap,
+                "boundary_window": settings.retrieve.boundary_window,
+                "ngram_range": [settings.retrieve.tfidf_ngram_min, settings.retrieve.tfidf_ngram_max],
+                "min_df": settings.retrieve.tfidf_min_df,
+                "max_df": settings.retrieve.tfidf_max_df,
             },
             results=[],
         )
@@ -98,12 +98,12 @@ def debug_retrieve(
         handled=handled,
         elapsed_ms=elapsed_ms,
         config={
-            "chunk_size": settings.retrieval.chunk_size,
-            "chunk_overlap": settings.retrieval.chunk_overlap,
-            "boundary_window": settings.retrieval.boundary_window,
-            "ngram_range": [settings.retrieval.tfidf_ngram_min, settings.retrieval.tfidf_ngram_max],
-            "min_df": settings.retrieval.tfidf_min_df,
-            "max_df": settings.retrieval.tfidf_max_df,
+            "chunk_size": settings.retrieve.chunk_size,
+            "chunk_overlap": settings.retrieve.chunk_overlap,
+            "boundary_window": settings.retrieve.boundary_window,
+            "ngram_range": [settings.retrieve.tfidf_ngram_min, settings.retrieve.tfidf_ngram_max],
+            "min_df": settings.retrieve.tfidf_min_df,
+            "max_df": settings.retrieve.tfidf_max_df,
         },
         results=items,
     )

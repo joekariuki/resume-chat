@@ -12,14 +12,14 @@ import logging
 import threading
 from dataclasses import dataclass
 from typing import List
-from .core.config import settings
+from ..core.config import settings
+from ..pdf_loader import get_resume_text
 
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity 
 
-from .pdf_loader import get_resume_text
 
 
 # -----------------------------------------------------------------------------
