@@ -26,14 +26,14 @@ from .pdf_loader import get_resume_text
 # Configuration (env vars with safe fallbacks)
 # -----------------------------------------------------------------------------
 
-CHUNK_SIZE = settings.retrieval.chunk_size
-CHUNK_OVERLAP = settings.retrieval.chunk_overlap
-TOP_K_DEFAULT = settings.retrieval.top_k
-BOUNDARY_BACKOFF_WINDOW = settings.retrieval.boundary_window
-TFIDF_NGRAM_MIN = settings.retrieval.tfidf_ngram_min
-TFIDF_NGRAM_MAX = settings.retrieval.tfidf_ngram_max
-TFIDF_MIN_DF = settings.retrieval.tfidf_min_df
-TFIDF_MAX_DF = settings.retrieval.tfidf_max_df
+CHUNK_SIZE = settings.retrieve_chunk_size
+CHUNK_OVERLAP = settings.retrieve_chunk_overlap
+TOP_K_DEFAULT = settings.retrieve_top_k
+BOUNDARY_BACKOFF_WINDOW = settings.retrieve_boundary_window
+TFIDF_NGRAM_MIN = settings.retrieve_tfidf_ngram_min
+TFIDF_NGRAM_MAX = settings.retrieve_tfidf_ngram_max
+TFIDF_MIN_DF = settings.retrieve_tfidf_min_df
+TFIDF_MAX_DF = settings.retrieve_tfidf_max_df
 
 # -----------------------------------------------------------------------------
 # Logging
