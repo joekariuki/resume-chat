@@ -4,15 +4,16 @@ import logging
 
 
 from .core.config import settings
-from .router_chat import router as router_chat
-from .router_contact import router as router_contact
-from .router_debug import router as debug_router
+from .routers.chat import router as chat_router
+from .routers.contact import router as contact_router
+from .routers.debug import router as debug_router
+
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
-app.include_router(router_chat)
-app.include_router(router_contact)
+app.include_router(chat_router)
+app.include_router(contact_router)
 
 
 if settings.enable_debug_routes:

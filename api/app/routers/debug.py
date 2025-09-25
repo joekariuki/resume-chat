@@ -1,11 +1,10 @@
-# api/app/router_debug.py
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from time import perf_counter
 
-from .core.config import settings
-from .pdf_loader import get_resume_info, get_resume_text
-from .retrieval import retrieve_top_chunks
+from ..core.config import settings
+from ..pdf_loader import get_resume_info, get_resume_text
+from ..retrieval import retrieve_top_chunks
 
 router = APIRouter(tags=["debug"])
 
