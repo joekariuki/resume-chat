@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
@@ -11,11 +10,12 @@ from .router_debug import router as debug_router
 
 logger = logging.getLogger(__name__)
 
-
 app = FastAPI()
 app.include_router(router_chat)
 app.include_router(router_contact)
-if int(settings.debug.enabled) == 1:
+
+
+if settings.enable_debug_routes:
     app.include_router(debug_router)
 
 origins = [o.strip() for o in (settings.allowed_origins or "").split(",") if o.strip()]
