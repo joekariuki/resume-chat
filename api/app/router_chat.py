@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from .core.config import settings
+from .retrieval import retrieve_top_chunks
+
 router = APIRouter()
 
 class ChatRequest(BaseModel):
@@ -13,4 +16,18 @@ class ChatResponse(BaseModel):
 
 @router.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
-    return ChatResponse(reply=f"Hello {request.message}", handled=True)
+    q = request.message.strip()
+    if not q:
+        return ChatResponse(reply="Please ask a question about my resume.", handled=False)
+    
+    top_k = settings.retrieval.top_k
+    threshold = settings.similarity_threshold
+    result = retrieve_top_chunks(q, top_k=top_k)
+
+    if not result.top_chunks:
+        return ChatResponse(reply="I couldn't access the resume information. Please try again later.", handled=False)
+
+    top = result.top_chunks[0]
+    handled = top.score >= threshold
+    
+    return ChatResponse(reply=top.text, handled=handled)
