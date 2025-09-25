@@ -1,26 +1,29 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import logging
+
+
+from .core.config import settings
 from .router_chat import router as router_chat
 from .router_contact import router as router_contact
 from .router_debug import router as debug_router
-import os
 
-load_dotenv(override=True)
+logger = logging.getLogger(__name__)
+
 
 app = FastAPI()
 app.include_router(router_chat)
 app.include_router(router_contact)
-
-if os.getenv("ENABLE_DEBUG_ROUTES", "1") == "1":
+if int(settings.debug.enabled) == 1:
     app.include_router(debug_router)
 
-origins = [o.strip() for o in (os.getenv("ALLOWED_ORIGINS") or "").split(",") if o.strip()]
+origins = [o.strip() for o in (settings.allowed_origins or "").split(",") if o.strip()]
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins or ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,13 +31,17 @@ app.add_middleware(
 
 @app.on_event("startup")
 def warm_resume_loader():
-
+    """
+        Light warm-up so first query is fast.
+        We only touch the resume text here. If you add a `warm_start()` in retrieval,
+        call it here instead.
+    """
     try:
         from .pdf_loader import get_resume_text
         _ = get_resume_text()
+        logger.info("Resume loaded successfully on startup.")
     except FileNotFoundError:
-        print("Resume not found")
-        pass
+        logger.info("Resume not found on startup; retriever will build lazily.")
 
 @app.get("/healthz")
 def healthz():

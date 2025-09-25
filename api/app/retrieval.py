@@ -9,10 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import logging
-import os
 import threading
 from dataclasses import dataclass
 from typing import List
+from .core.config import settings
 
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -21,21 +21,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from .pdf_loader import get_resume_text
 
-# -----------------------------------------------------------------------------
-# Configuration (env with safe fallbacks)
-# -----------------------------------------------------------------------------
-CHUNK_SIZE = int(os.getenv("RETRIEVE_CHUNK_SIZE", "1200"))
-CHUNK_OVERLAP = int(os.getenv("RETRIEVE_CHUNK_OVERLAP", "200"))
-TOP_K_DEFAULT = int(os.getenv("RETRIEVE_TOP_K", "3"))
 
-# Chunk boundary search window in characters when avoiding mid-word cuts
-BOUNDARY_BACKOFF_WINDOW = int(os.getenv("RETRIEVE_BOUNDARY_WINDOW", "50"))
+# -----------------------------------------------------------------------------
+# Configuration (env vars with safe fallbacks)
+# -----------------------------------------------------------------------------
 
-# TF-IDF tunables
-TFIDF_NGRAM_MIN = int(os.getenv("RETRIEVE_TFIDF_NGRAM_MIN", "1"))
-TFIDF_NGRAM_MAX = int(os.getenv("RETRIEVE_TFIDF_NGRAM_MAX", "1"))
-TFIDF_MIN_DF = float(os.getenv("RETRIEVE_TFIDF_MIN_DF", "1"))  # int or float allowed by sklearn
-TFIDF_MAX_DF = float(os.getenv("RETRIEVE_TFIDF_MAX_DF", "1.0"))  # 0 < max_df <= 1.0 means proportion
+CHUNK_SIZE = settings.retrieval.chunk_size
+CHUNK_OVERLAP = settings.retrieval.chunk_overlap
+TOP_K_DEFAULT = settings.retrieval.top_k
+BOUNDARY_BACKOFF_WINDOW = settings.retrieval.boundary_window
+TFIDF_NGRAM_MIN = settings.retrieval.tfidf_ngram_min
+TFIDF_NGRAM_MAX = settings.retrieval.tfidf_ngram_max
+TFIDF_MIN_DF = settings.retrieval.tfidf_min_df
+TFIDF_MAX_DF = settings.retrieval.tfidf_max_df
 
 # -----------------------------------------------------------------------------
 # Logging
