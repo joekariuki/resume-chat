@@ -20,7 +20,7 @@ def chat(request: ChatRequest):
     if not q:
         return ChatResponse(reply="Please ask a question about my resume.", handled=False)
     
-    top_k = settings.retrieval.top_k
+    top_k = settings.retrieve_top_k
     threshold = settings.similarity_threshold
     result = retrieve_top_chunks(q, top_k=top_k)
 
